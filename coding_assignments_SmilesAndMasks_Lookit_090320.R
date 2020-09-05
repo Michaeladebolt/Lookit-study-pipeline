@@ -20,7 +20,7 @@ codingFolder <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/datavyu_coding/
 datavyuFiles <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/processed_data/datavyu_files/"
 setwd(organizedLookitVideos)
 
-#### Randomly assign primary coders ############################################
+#### Randomly assign primary & secondary coders ################################
 set.seed(6768)
 child_ids <- list.files(path = organizedLookitVideos) #list all the file names to get a list of the child_ids
 coder_ids <- gsub(pattern = "SmilesAndMasks_", replacement = "", x = list.files(path = codingFolder, pattern = "_")) # Get initials of coders
@@ -126,10 +126,41 @@ for(m in 1:length(coderFolders)) {
 
 
 #### Trim the second coding assignment .opf files ##############################
+# We only want RAs to code 25% of the data, which corresponds to about 2 trials per infant.
+# At the moment, the RA has all of the trials in their 2nd coding folder -- so, we will 
+# randomly select 2 trials from this list for the RAs to code (excluding the calibration trials), 
+# and then delete the remaining trials (.opf) files. 
 
+setwd(codingFolder)
+coderFolders <- list.files(codingFolder)
 
-
-
+for(i in 1:length(coderFolders)){
+  # extract which babies are the reliability babies:
+  
+  # Get the RA's initials from their folder
+  currentFolder <- strsplit(coderFolders[i], "_")
+  currentRA <- currentFolder[[1]][2]
+  
+  # Find all the the current RA's reliability assignments
+  currentChildIDs <- dat %>% filter(coder_2_assignment == currentRA) %>% select(child_ids) 
+  
+  for(j in 1:length(currentChildIDs$child_ids)) { # For each 2nd reliability baby
+    # Get list of .opf files in the current folder
+    dv_files <-  data.frame(files = list.files(paste0(codingFolder, coderFolders[i], "/", currentChildIDs$child_ids[j]), pattern = ".opf" ))
+    dv_files2 <- dv_files %>% filter(!grepl("calibration", files))# remove calibration trials from the options
+    
+    if( length(dv_files2$files) >= 2) { # Check to see if this baby has at least 2 trials to begin with.
+      # Randomly select 25% of trials to keep in RA's folder
+      keepFiles <- sample(dv_files2$files, size = .375*length(dv_files2$files), replace = FALSE) #select 2 files without replacement
+      removeFiles <- dv_files %>% filter(!files %in% keepFiles)
+      
+      # Remove all the files except for the 2 selected files to code:
+      file.remove(paste0(codingFolder, coderFolders[i], "/", currentChildIDs$child_ids[j], "/", removeFiles$files))  # Won't delete the folders you just created
+    } else {
+      next()
+    }#if          
+  }#j 
+}# i
 
 
 
