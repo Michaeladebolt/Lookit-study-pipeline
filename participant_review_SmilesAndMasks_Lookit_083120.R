@@ -8,6 +8,8 @@
 # This code reviews how many participants we have in the study that have provided
 # usable data.
 
+# Add more info here.
+
 #### Libraries #################################################################
 library(tidyverse)
 library(av)
