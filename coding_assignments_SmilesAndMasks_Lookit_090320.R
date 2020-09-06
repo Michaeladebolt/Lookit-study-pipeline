@@ -151,7 +151,7 @@ for(i in 1:length(coderFolders)){
     
     if( length(dv_files2$files) >= 3) { # Check to see if this baby has at least 3 trials to begin with.
       # Randomly select 25% of trials to keep in RA's folder
-      keepFiles <- sample(dv_files2$files, size = .375*length(dv_files2$files), replace = FALSE) #select 2 files without replacement
+      keepFiles <- sample(dv_files2$files, size = .375*length(dv_files2$files), replace = FALSE) #select 3 files without replacement
       removeFiles <- dv_files %>% filter(!files %in% keepFiles)
       
       # Remove all the files except for the 2 selected files to code:
