@@ -28,7 +28,7 @@ coder_ids <- gsub(pattern = "SmilesAndMasks_", replacement = "", x = list.files(
 # Set up new dataframe to store information
 dat <- data.frame(child_ids = child_ids, coder_1_assignment = sample(coder_ids, size = length(child_ids) , replace = T),
                   coder_1_complete = NA, coder_1_notes = NA, coder_2_assignment = NA, coder_2_complete = NA, coder_2_notes = NA)
-dat %>% filter(child_ids != "PTB42L") -> dat # remove training baby (just in case it was in there....)
+dat %>% filter(child_ids != "PTB42L" & child_ids != "V32NYE") -> dat # remove training baby and Michaela test
 
 # Assign the second coder
 coders <- data.frame(coder_ids)
@@ -45,7 +45,7 @@ existing_log <- read_sheet(ss = "https://docs.google.com/spreadsheets/d/18B5HTdk
 ## Do some editing to the existing log based on whether things are being coded etc....
 
 # Save to an updated object name....updated_log
-updated_log <- dat
+updated_log <- dat[order(dat$coder_1_assignment),]
 
 # Create new google sheet with updated information
 gs4_create("smiles-and-masks-coding-log", sheets = updated_log)
@@ -149,7 +149,7 @@ for(i in 1:length(coderFolders)){
     dv_files <-  data.frame(files = list.files(paste0(codingFolder, coderFolders[i], "/", currentChildIDs$child_ids[j]), pattern = ".opf" ))
     dv_files2 <- dv_files %>% filter(!grepl("calibration", files))# remove calibration trials from the options
     
-    if( length(dv_files2$files) >= 2) { # Check to see if this baby has at least 2 trials to begin with.
+    if( length(dv_files2$files) >= 3) { # Check to see if this baby has at least 3 trials to begin with.
       # Randomly select 25% of trials to keep in RA's folder
       keepFiles <- sample(dv_files2$files, size = .375*length(dv_files2$files), replace = FALSE) #select 2 files without replacement
       removeFiles <- dv_files %>% filter(!files %in% keepFiles)
@@ -163,5 +163,5 @@ for(i in 1:length(coderFolders)){
 }# i
 
 
-
+# done!
 
