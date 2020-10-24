@@ -1,14 +1,12 @@
 ################################################################################
 #   Smiles and Masks Lookit study 
 #   Written by: Michaela DeBolt
-#   Last edit: 8/16/20
+#   Last edit: 9/23/20
 #   Contact: mdebolt@ucdavis.edu
 ################################################################################
 
 # This code reviews how many participants we have in the study that have provided
-# usable data.
-
-# Add more info here.
+# usable data. The code also prints a .csv with relevant information to upload to Databrary. 
 
 #### Libraries #################################################################
 library(tidyverse)
@@ -18,12 +16,36 @@ library(av)
 # Change these working directory paths to match the location of where these folders/files are organized on your computer
 organizedLookitVideos <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/lookit_videos/organized_lookit_videos_2020-09-03/"
 responseData <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/response_overview_data/"
-
+demoData <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/demographic_data/"
 setwd(organizedLookitVideos)
 
-#### Read in the response data #################################################
+#### Read in the response & demographic data ###################################
 
 response <- read.csv(paste0(responseData, "Smiles-and-Masks_all-responses-identifiable.csv"))
+demos <- read.csv(paste0(demoData, "Smiles-and-Masks_all-demographic-snapshots.csv"))
+
+#### Create upload file for Databrary ##########################################
+
+# The demographic spreadsheet uploaded to Databrary needs to contain specific columns. 
+
+db.dat <- data.frame(testDate = response$response__date_created, 
+                     ID = response$child__hashed_id,
+                     birthdate = response$child__birthday,
+                     gender = response$child__gender,
+                     race = demos$demographic__race_identification,
+                     language = response$child__language_list,
+                     country = demos$demographic__country,
+                     state = demos$demographic__state)
+
+
+db.dat$testDate <- lubridate::as_date(db.dat$testDate)
+db.dat$birthdate <- lubridate::mdy(db.dat$birthdate)
+
+db.dat$gender <- ifelse(db.dat$gender=="m", "Male", "Female")
+
+write.csv(db.dat, "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/processed_data/databrary_files/databraryDemographicSpreadsheet.csv", row.names = F)
+
+
 
 #### Determine video duration #################################################
 

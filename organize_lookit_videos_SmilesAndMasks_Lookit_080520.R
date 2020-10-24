@@ -37,10 +37,6 @@ allVideos3 <- merge(allVideos2, responseDat, by.x = "response_uuid", by.y = "res
 sub_ids <- unique(allVideos3[,c("response_uuid","child__hashed_id")])  # create a list of the study IDs
 
 
-
-#### Organize the Datavyu files ################################################
-
-
 ### Create a folder to put all the organized videos ############################
 # This folder will be created within the same folder in which all of your video files are stored. This can be changed by substituting another location
 # for the "lookitVideos" path. 

@@ -18,9 +18,9 @@ library(tidyverse)
 #### Set various directory routes  #############################################
 # Change these working directory paths to match the location of where these folders/files are organized on your computer
 # Make sure all of these folders/files contain the most up-to-date information & exports, etc. 
-organizedLookitVideos <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/lookit_videos/organized_lookit_videos_2020-09-03/"
-rubyData <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/processed_data/files_for_ruby_code/"
-frameData <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/processed_data/processed_frame_data/"
+organizedLookitVideos <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/lookit_videos/organized_lookit_videos_2020-10-19/"
+#rubyData <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/processed_data/files_for_ruby_code/"
+rubyData <- "~/Desktop/data/"
 responseData <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/response_overview_data/"
 
 # Create a dataframe with the unique subject ID information
