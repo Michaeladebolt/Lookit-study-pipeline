@@ -53,5 +53,6 @@ for (i in 1:nrow(sub_ids))
 
 # done!
 
-# Warnings indicate that you have a participant that did the study more than once. They are fine to ignore. 
+# Warnings indicate that you have a participant that did the study more than once. They are fine to ignore... *but probably
+# worth looking into if its your first time running this code to make sure its safe to ignore!*
 

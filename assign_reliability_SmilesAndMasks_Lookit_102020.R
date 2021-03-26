@@ -32,14 +32,22 @@ log <- log[-c(1:2),] # Remove the column name definition row -- This column is s
 
 #### Assign specific trials to the second coder ################################
 
+# Note that the coder 1 must have the files at least in their folder -- they don't have to be coded but they need to be in their
+# folder, or else the loop will fail. 
+
 for(i in 1:nrow(log)) {
-  if(log$coder_1_completed[i]!="NULL" & !is.na(log$coder_2_assignment[i]) & log$coder_2_completed[i]=="NULL") { # If the baby has been coded, 2nd coder has been assigned, but not yet coded.
+  if(!is.na(log$coder_2_assignment[i]) & log$coder_2_completed[i]=="NULL") { # If 2nd coder has been assigned, but not yet coded.
     # locate the coded .opf files (and the video files for later):
-    coded_files <- data.frame(files = list.files(paste0(codingFolders,"SmilesAndMasks_",log$coder_1_assignment[i], "/", log$child_id[i]), pattern = ".opf") )
-    video_files <- data.frame(files = list.files(paste0(codingFolders,"SmilesAndMasks_",log$coder_1_assignment[i], "/", log$child_id[i]), pattern = ".mp4") )
-    test_files <- coded_files %>% filter(!grepl("calibration", files)) 
-    cal_files <- coded_files %>% filter(!grepl("test", files)) 
+    coded_files <- data.frame(files = list.files(paste0(codingFolders,"SmilesAndMasks_",log$coder_1_assignment[i], "/", log$child_id[i]), pattern = ".opf") ) 
+    video_files <- data.frame(files = list.files(paste0(codingFolders,"SmilesAndMasks_",log$coder_1_assignment[i], "/", log$child_id[i]), pattern = ".mp4") ) 
     
+    # Make smaller data frames and force type to be character
+    test_files <- coded_files %>% filter(!grepl("calibration", files)) 
+    test_files$files <- as.character(test_files$files)
+    
+    cal_files <- coded_files %>% filter(!grepl("test", files)) 
+    cal_files$files <- as.character(cal_files$files)
+
     #set.seed(8675309)
     # randomly select 1 calibration and 2 test trials:
     rel_files <- c(sample(cal_files$files, 1, replace = FALSE), sample(test_files$files, 2, replace = FALSE))

@@ -18,7 +18,7 @@ library(tidyverse)
 #### Set various directory routes  #############################################
 # Change these working directory paths to match the location of where these folders/files are organized on your computer
 # Make sure all of these folders/files contain the most up-to-date information & exports, etc. 
-organizedLookitVideos <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/lookit_videos/organized_lookit_videos_2020-10-19/"
+organizedLookitVideos <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/lookit_videos/organized_lookit_videos_2021-02-08/"
 #rubyData <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/processed_data/files_for_ruby_code/"
 rubyData <- "~/Desktop/data/"
 responseData <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/response_overview_data/"
@@ -28,8 +28,7 @@ setwd(organizedLookitVideos)
 sub_ids <- data.frame(filename = list.files(path = organizedLookitVideos))
 master_data <- list()
 
-for (i in 1:nrow(sub_ids))
-{
+for (i in 1:nrow(sub_ids)){
   filenames <- list.files(path = paste0(organizedLookitVideos, sub_ids[i,1])) #list all the files for a specific subject
   master_data[[i]] <- data.frame(child_id = sub_ids[i,1], filenames = filenames)
 }# end for loop

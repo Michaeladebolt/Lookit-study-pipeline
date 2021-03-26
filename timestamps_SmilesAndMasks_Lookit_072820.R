@@ -18,7 +18,7 @@
 #### Working directories #######################################################
 
 processedData <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/processed_data/" 
-frameData <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/frame_data/"
+frameData <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/frame_data/Smiles-and-Masks_framedata_per_session/"
 demoData <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/demographic_data/"
 setwd(frameData)
 
@@ -121,13 +121,6 @@ finalDat <- subjectInfo3 %>% select(response_uuid, child_hashed_id, test_date = 
 
 write.csv(x = finalDat, file = paste0(processedData, "processed_frame_data", "/processed_frame_data_", Sys.Date(), ".csv"), row.names = F)
 
-#### Save a copy of the frame data to the folder containing videos #############
-
-# This section splits up the final data into separate csv files for each infant
-# and then saves this file in the same folder containing the baby's videos. This 
-# file can then be used by RAs as a reference, if needed. 
-
-## abandoned this idea ^^ just going to have RAs code the entire video
 
 
 

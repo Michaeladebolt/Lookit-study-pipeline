@@ -12,7 +12,7 @@ library(tidyverse)
 
 #### Set various directory routes  #############################################
 # Change these working directory paths to match the location of where these folders/files are organized on your computer
-organizedLookitVideos <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/lookit_videos/organized_lookit_videos_2020-10-19/"
+organizedLookitVideos <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/lookit_videos/organized_lookit_videos_2021-02-08/"
 dv_files <- "~/Box/Research/Smiles_and_Masks_LookitSudy_2020/data/processed_data/datavyu_files/" # Where all the individual .opf files are stored
 # dv = datavyu
 setwd(organizedLookitVideos)
